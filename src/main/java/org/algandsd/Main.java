@@ -4,16 +4,16 @@ import java.io.IOException;
 
 public class Main {
     static void main(String[] args) throws IOException {
-        if (args.length != 0) {
+//        if (args.length != 0) {
             CmdParams params = parseArgs(args);
             if (params.error) {
                 System.out.println("Ошибка: параметры не вписаны или вписаны с ошибками");
             } else if (params.window) {
                 new MainForm();
             }
-        } else {
-            System.out.println("Ошибка: параметры не вписаны или вписаны с ошибками");
-        }
+//        } else {
+//            System.out.println("Ошибка: параметры не вписаны или вписаны с ошибками");
+//        }
     }
 
     public static class CmdParams {
