@@ -176,12 +176,11 @@ public class MainForm extends JFrame{
             return;
         }
 
-        if (tableModel.getValueAt(row, col).equals(2) || tableModel.getValueAt(row, col).equals(3)) {
+        if (((int) tableModel.getValueAt(row, col)) == 2 || ((int) tableModel.getValueAt(row, col)) == 3) {
             return;
         }
         // Устанавливаем значение 4 (зелёный цвет) в указанную ячейку
         tableModel.setValueAt(4, row, col);
-        return;
     }
 
     public int[][] getTableDataAsArray() {
