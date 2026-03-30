@@ -1,17 +1,33 @@
 package org.algandsd;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
-    static void main() {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        IO.println(String.format("Hello and welcome!"));
+import java.io.IOException;
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            IO.println("i = " + i);
+public class Main {
+    static void main(String[] args) throws IOException {
+        if (args.length != 0) {
+            CmdParams params = parseArgs(args);
+            if (params.error) {
+                System.out.println("Ошибка: параметры не вписаны или вписаны с ошибками");
+            } else if (params.window) {
+                new MainForm();
+            }
+        } else {
+            System.out.println("Ошибка: параметры не вписаны или вписаны с ошибками");
         }
+    }
+
+    public static class CmdParams {
+        public boolean window;
+        public boolean error;
+    }
+
+    public static CmdParams parseArgs(String[] args) {
+        CmdParams params = new CmdParams();
+        if (args[0].equals("--window")) {
+            params.window = true;
+            return params;
+        }
+        params.error = true;
+        return params;
     }
 }
