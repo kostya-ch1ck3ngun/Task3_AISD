@@ -23,11 +23,11 @@ public class Main {
 
     public static CmdParams parseArgs(String[] args) {
         CmdParams params = new CmdParams();
-        if (args[0].equals("--window")) {
+//        if (args[0].equals("--window")) {
             params.window = true;
             return params;
-        }
-        params.error = true;
-        return params;
+//        }
+//        params.error = true;
+//        return params;
     }
 }
