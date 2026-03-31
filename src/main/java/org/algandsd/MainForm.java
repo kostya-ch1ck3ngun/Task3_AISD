@@ -116,7 +116,7 @@ public class MainForm extends JFrame{
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/java/org/algandsd/" + filePath))) {
             for (Point point : points) {
                 // Записываем координаты точки: x и y через пробел, затем переход на новую строку
-                writer.write(point.x + " " + point.y);
+                writer.write(point.getX() + " " + point.getY());
                 writer.newLine();
             }
         } catch (IOException e) {
@@ -151,8 +151,8 @@ public class MainForm extends JFrame{
 
         while (!queue.isEmpty()) {
             Point point = queue.pop();
-            int row = point.x;
-            int col = point.y;
+            int row = point.getX();
+            int col = point.getY();
 
             fillCellGreen(row, col); // Зелёный цвет (значение 4)
             pointsLabel.setText(pointsLabel.getText() + " (" + row + ", " + col + ")");
@@ -176,7 +176,8 @@ public class MainForm extends JFrame{
             return;
         }
 
-        if (((int) tableModel.getValueAt(row, col)) == 2 || ((int) tableModel.getValueAt(row, col)) == 3) {
+        Object value = tableModel.getValueAt(row, col);
+        if (value != null && ((Integer) value == 2 || (Integer) value == 3)) {
             return;
         }
         // Устанавливаем значение 4 (зелёный цвет) в указанную ячейку
@@ -355,9 +356,9 @@ public class MainForm extends JFrame{
     // Устанавливаем позицию синего и очищаем старый синий, если он был
     private void setBlue(int row, int col) {
         if (bluePosition != null &&
-                (bluePosition.x != row || bluePosition.y != col)) {
+                (bluePosition.getX() != row || bluePosition.getY() != col)) {
             // Очищаем старый синий, если это не та же ячейка
-            tableModel.setValueAt(0, bluePosition.x, bluePosition.y);
+            tableModel.setValueAt(0, bluePosition.getX(), bluePosition.getY());
         }
         bluePosition = new Point(row, col);
     }
@@ -365,9 +366,9 @@ public class MainForm extends JFrame{
     // Устанавливаем позицию красного и очищаем старый красный, если он был
     private void setRed(int row, int col) {
         if (redPosition != null &&
-                (redPosition.x != row || redPosition.y != col)) {
+                (redPosition.getX() != row || redPosition.getY() != col)) {
             // Очищаем старый красный, если это не та же ячейка
-            tableModel.setValueAt(0, redPosition.x, redPosition.y);
+            tableModel.setValueAt(0, redPosition.getX(), redPosition.getY());
         }
         redPosition = new Point(row, col);
     }
