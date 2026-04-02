@@ -12,26 +12,25 @@ public class TaskLogic {
             {0, -1}
     };
 
-    public static Deque<Point> solve (int[][] arr) {
-        Deque<Point> pointsStack = new SimpleDeque<>();
+    public static Deque<Point> solve (int[][] arr, Deque<Point> pointsQueue) {
         Set<Point> visitedPoints = new HashSet<>();
 
-        findStart(arr, pointsStack, visitedPoints);
+        findStart(arr, pointsQueue, visitedPoints); // O(n) (n - array size)
 
-        while (!pointsStack.isEmpty()) {
-            check(arr, pointsStack, visitedPoints);
+        while (!pointsQueue.isEmpty()) { // O(n)
+            check(arr, pointsQueue, visitedPoints); // O(1)
 
-            assert pointsStack.peekLast() != null;
-            if (arr[pointsStack.peekLast().getY()][pointsStack.peekLast().getX()] == 3) {
+            assert pointsQueue.peekLast() != null;
+            if (arr[pointsQueue.peekLast().getY()][pointsQueue.peekLast().getX()] == 3) {
                 break;
             }
         }
 
-        assert pointsStack.peekLast() != null;
-        return getResult(pointsStack.peekLast());
+        assert pointsQueue.peekLast() != null;
+        return getResult(pointsQueue.peekLast()); // O(n)
     }
 
-    private static void findStart (int[][] arr, Deque<Point> pointsStack, Set<Point> visitedPoints) {
+    private static void findStart (int[][] arr, Deque<Point> pointsQueue, Set<Point> visitedPoints) {
         int rows = arr.length;
         int cols = arr[0].length;
 
@@ -39,15 +38,15 @@ public class TaskLogic {
             for (int x = 0; x < cols; x++) {
                 if (arr[y][x] == 2) {
                     Point point = new Point(x, y);
-                    pointsStack.addLast(point);
+                    pointsQueue.addLast(point);
                     visitedPoints.add(point);
                 }
             }
         }
     }
 
-    private static void check(int[][] arr, Deque<Point> pointsStack, Set<Point> visitedPoints) {
-        Point point = pointsStack.pollFirst();
+    private static void check(int[][] arr, Deque<Point> pointsQueue, Set<Point> visitedPoints) {
+        Point point = pointsQueue.pollFirst();
 
         for (int[] direction : directions) {
             Point temp = new Point(point.getX() + direction[0], point.getY() + direction[1]);
@@ -55,7 +54,7 @@ public class TaskLogic {
 
             if (temp.getX() >= 0 && temp.getX() < arr[0].length && temp.getY() >= 0 && temp.getY() < arr.length) {
                 if (!visitedPoints.contains(temp) && arr[temp.getY()][temp.getX()] != 1) {
-                    pointsStack.addLast(temp);
+                    pointsQueue.addLast(temp);
                     visitedPoints.add(temp);
 
                     if (arr[temp.getY()][temp.getX()] == 3) {

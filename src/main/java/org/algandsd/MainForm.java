@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.*;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
@@ -22,11 +23,12 @@ public class MainForm extends JFrame{
     private JButton outputButton;
     private JSpinner rowsSpinner;
     private JSpinner columnsSpinner;
-    private JButton resultButton;
+    private JButton resultDequeButton;
     private JTable table;
     private JButton clearButton;
     private JScrollPane pane;
     private JLabel pointsLabel;
+    private JButton resultSimpleDequeButton;
     private DefaultTableModel tableModel;
     private Point bluePosition = null;  // Позиция синего элемента
     private Point redPosition = null;   // Позиция красного элемента
@@ -52,10 +54,19 @@ public class MainForm extends JFrame{
                 loadFromFile("src/main/java/org/algandsd/" + inputField.getText());
             }
         });
-        resultButton.addActionListener(new ActionListener() {
+        resultDequeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Deque<Point> points = TaskLogic.solve(getTableDataAsArray());
+                Deque<Point> pointDeque = new ArrayDeque<>();
+                Deque<Point> points = TaskLogic.solve(getTableDataAsArray(), pointDeque);
+                fillFromPointQueue(points);
+            }
+        });
+        resultSimpleDequeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Deque<Point> pointDeque = new SimpleDeque<>();
+                Deque<Point> points = TaskLogic.solve(getTableDataAsArray(), pointDeque);
                 fillFromPointQueue(points);
             }
         });
